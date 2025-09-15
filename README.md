@@ -72,3 +72,10 @@ use DTOs to prevent coupling and separation of concern
 ## Util
 
 - kelvinToFahrenheit.kt, helper function to convert kelvin to fahrenheit
+
+
+# UI
+
+![lookup](/images/lookup.png))
+![list](/images/list.png)))
+![details](/images/details.png)))
