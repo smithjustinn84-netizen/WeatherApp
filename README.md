@@ -76,6 +76,6 @@ use DTOs to prevent coupling and separation of concern
 
 # UI
 
-![lookup](/images/lookup.png))
-![list](/images/list.png)))
-![details](/images/details.png)))
+![lookup](/images/lookup.png)
+![list](/images/list.png)
+![details](/images/details.png)
