@@ -9,20 +9,20 @@ data class WeatherResponse(
     val cod: String? = null,
     val message: String? = null,
     val cnt: Int? = null,
-    val list: ArrayList<Forecast> = arrayListOf(),
-    val city: City? = City()
+    val list: List<Forecast> = emptyList(),
+    val city: City? = null
 )
 
 @Serializable
 data class City(
     val id: Int? = null,
     val name: String? = null,
-    val coord: Coord? = Coord(),
+    val coord: Coord? = null,
     val country: String? = null,
-    val population: Double? = null,
+    val population: Int? = null,
     val timezone: Int? = null,
-    val sunrise: Int? = null,
-    val sunset: Int? = null
+    val sunrise: Long? = null,
+    val sunset: Long? = null
 )
 
 @Serializable
@@ -38,14 +38,14 @@ data class Coord(
 
 @Serializable
 data class Forecast(
-    val dt: Int? = null,
-    val main: Main? = Main(),
-    val weather: ArrayList<Weather> = arrayListOf(),
-    val clouds: Clouds? = Clouds(),
-    val wind: Wind? = Wind(),
+    val dt: Long? = null,
+    val main: Main? = null,
+    val weather: List<Weather> = emptyList(),
+    val clouds: Clouds? = null,
+    val wind: Wind? = null,
     val visibility: Int? = null,
     val pop: Double? = null,
-    val sys: Sys? = Sys(),
+    val sys: Sys? = null,
     @SerialName("dt_txt") val dtTxt: String? = null
 )
 
