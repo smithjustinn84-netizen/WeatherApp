@@ -11,7 +11,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.example.weatherapp.data.AppContainer
-import com.example.weatherapp.model.DisplayForecast
 import com.example.weatherapp.model.toDetails
 import com.example.weatherapp.model.toDisplayForecast
 import com.example.weatherapp.ui.theme.WeatherAppTheme

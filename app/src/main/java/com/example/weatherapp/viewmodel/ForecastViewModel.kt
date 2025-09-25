@@ -8,10 +8,12 @@ import com.example.weatherapp.data.WeatherRepository
 import com.example.weatherapp.model.DisplayForecast
 import com.example.weatherapp.model.toDisplayForecast
 import io.ktor.serialization.JsonConvertException
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 
 
@@ -42,6 +44,7 @@ class ForecastViewModel(
                 }
                 emit(State.Error(it.message ?: "Unknown error"))
             }
+            .flowOn(Dispatchers.IO)
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(5_000),
