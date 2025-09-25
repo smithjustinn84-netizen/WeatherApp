@@ -11,7 +11,6 @@ import io.ktor.serialization.JsonConvertException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
@@ -38,12 +37,6 @@ class ForecastViewModel(
 
     val uiState =
         getForecasts()
-            .catch {
-                if (it is JsonConvertException) {
-                    emit(State.Error("Invalid JSON"))
-                }
-                emit(State.Error(it.message ?: "Unknown error"))
-            }
             .flowOn(Dispatchers.IO)
             .stateIn(
                 scope = viewModelScope,
@@ -52,19 +45,27 @@ class ForecastViewModel(
             )
 
     private fun getForecasts(): Flow<State> = flow {
-        emit(State.Loading)
-        val response = repository.fetchWeather(cityName)
-        if (response.cod != "200") {
-            emit(State.Error(response.message ?: "Unknown error"))
-            return@flow
-        }
-        val forecast = response.list.map { response ->
-            response.toDisplayForecast()
-        }
-        if (forecast.isEmpty()) {
-            emit(State.Error("No forecasts found"))
-        } else {
-            emit(State.Content(forecast))
+        try {
+            emit(State.Loading)
+            val response = repository.fetchWeather(cityName)
+            if (response.cod != "200") {
+                emit(State.Error(response.message ?: "Unknown error"))
+                return@flow
+            }
+            val forecast = response.list.map { response ->
+                response.toDisplayForecast()
+            }
+            if (forecast.isEmpty()) {
+                emit(State.Error("No forecasts found"))
+            } else {
+                emit(State.Content(forecast))
+            }
+        } catch (error: Exception) {
+            if (error is JsonConvertException) {
+                emit(State.Error("Invalid JSON"))
+            } else {
+                emit(State.Error(error.message ?: "Unknown error"))
+            }
         }
     }
 }
